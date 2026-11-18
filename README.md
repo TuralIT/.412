@@ -14,29 +14,30 @@ CMD'ye yapıştır / paste into CMD:
 powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/TuralIT/.412/main/install.ps1 | iex"
 ```
 
-İndirir, kurar, masaüstüne kısayol koyar ve açar. Güncellemek için aynı satırı tekrar çalıştır.
-Downloads, installs, adds a desktop shortcut and starts it. Run the same line again to update.
+**TR:** İndirir, kurar, masaüstüne **Nightshift** kısayolu koyar ve açar. Bundan sonra hep o kısayolla aç: her açılışta yeni sürüm varsa kendisi indirir (sadece değişen dosyalar, birkaç MB). İnternet yoksa direkt açılır. Ayarların ve öğrenilen cevaplar korunur.
 
-## İndir / Download (elle / by hand)
+**EN:** Downloads, installs, puts a **Nightshift** shortcut on the desktop and starts it. From then on always open it with that shortcut: on every start it fetches a new version by itself if there is one (only the changed files, a few MB). No internet: it just opens. Your settings and learned answers are kept.
 
-**[Nightshift.zip'i indir / Download Nightshift.zip](https://github.com/TuralIT/.412/releases/latest/download/Nightshift.zip)** (~210 MB)
+## İlk açılış / First start
 
 ### TR
-1. Zip'in **tamamını** bir klasöre çıkar (içinden direkt çalıştırma).
-2. `Nightshift` klasöründeki `Nightshift.exe`'yi aç. Python gerekmez.
-   Windows "bilgisayarınızı korudu" derse: **Ek bilgi → Yine de çalıştır**.
-3. İlk açılışta kendi tuşlarını gir: Ayarlar → Genel (başlat/durdur), Ayarlar → Meth (bagaj tuşu, kilit tuşu L).
-4. Öğrenilmiş meth cevapları: Ayarlar → Genel → Öğrenilen cevaplar → zip'teki `meth_learned.json`.
-5. FiveM'de sunucuya gir; oyun yüklenince Nightshift oyunu kendisi bulur.
-6. Meth: arka koltukta otur (`/koltuk 4`), aracı **L** ile kilitle, sonra başlat. Her üretim için üzerinde 5x ASETON + 2x LITYUM olmalı.
+1. Windows uyarırsa: **Ek bilgi → Yine de çalıştır**.
+2. Kendi tuşlarını gir: Ayarlar → Genel (başlat/durdur), Ayarlar → Meth (bagaj tuşu, kilit tuşu L).
+3. Öğrenilmiş meth cevaplarını içe aktarmayı teklif ederse **evet** de.
+4. FiveM'de sunucuya gir; oyun yüklenince Nightshift oyunu kendisi bulur.
+5. Meth: arka koltukta otur (`/koltuk 4`), aracı **L** ile kilitle, Meth Lab üzerinde olsun, sonra başlat.
+   - Her üretimden sonra meth araç içi depoya konur.
+   - 5x ASETON / 2x LITYUM'dan azı kalınca araç içi depodan 10 üretimlik (50 + 20) alınır. Orada da yoksa: meth araca, araç kilitlenir, oyun kapanır.
+   - Meth Lab asla araca konmaz.
 
 ### EN
-1. Extract the **whole** zip to a folder (don't run it from inside the zip).
-2. Open `Nightshift.exe` in the `Nightshift` folder. No Python needed.
-   If Windows says "protected your PC": **More info → Run anyway**.
-3. First run: set your own keys in Settings → General (start/stop) and Settings → Meth (storage key, lock key L).
-4. Learned meth answers: Settings → General → Learned answers → `meth_learned.json` from the zip.
-5. Join the server in FiveM; once the game has loaded, Nightshift finds it by itself.
-6. Meth: sit in the back seat (`/koltuk 4`), lock the car with **L**, then start. Every cook needs 5x ASETON + 2x LITYUM on you.
+1. If Windows warns: **More info → Run anyway**.
+2. Set your own keys: Settings → General (start/stop), Settings → Meth (storage key, lock key L).
+3. Say **yes** when it offers to import the learned meth answers.
+4. Join the server in FiveM; once the game has loaded, Nightshift finds it by itself.
+5. Meth: sit in the back seat (`/koltuk 4`), lock the car with **L**, have the Meth Lab on you, then start.
+   - After every cook the meth goes into the in-car storage.
+   - Under 5x ASETON / 2x LITYUM it takes 10 cooks' worth (50 + 20) from the in-car storage. None there either: meth into the car, car locked, game closed.
+   - The Meth Lab is never put in the car.
 
-Yeni sürüm / New versions: [Releases](https://github.com/TuralIT/.412/releases)
+Sürümler / Versions: [Releases](https://github.com/TuralIT/.412/releases) · Elle indir / manual download: [Nightshift.zip](https://github.com/TuralIT/.412/releases/latest/download/Nightshift.zip)
