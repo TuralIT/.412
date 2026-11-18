@@ -1,6 +1,23 @@
 # Nightshift
 
-## İndir / Download
+## Kur / Install (tek satır / one line)
+
+PowerShell'e yapıştır / paste into PowerShell:
+
+```powershell
+irm https://raw.githubusercontent.com/TuralIT/.412/main/install.ps1 | iex
+```
+
+CMD'ye yapıştır / paste into CMD:
+
+```cmd
+powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/TuralIT/.412/main/install.ps1 | iex"
+```
+
+İndirir, kurar, masaüstüne kısayol koyar ve açar. Güncellemek için aynı satırı tekrar çalıştır.
+Downloads, installs, adds a desktop shortcut and starts it. Run the same line again to update.
+
+## İndir / Download (elle / by hand)
 
 **[Nightshift.zip'i indir / Download Nightshift.zip](https://github.com/TuralIT/.412/releases/latest/download/Nightshift.zip)** (~210 MB)
 
