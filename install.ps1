@@ -22,7 +22,7 @@ function Get-Zip($url, $into) {
 }
 
 try {
-    if (Get-Process Nightshift -ErrorAction SilentlyContinue) {
+    if (Get-Process Nightshift -ErrorAction SilentlyContinue | Where-Object { $_.Path -like "$dir\*" }) {
         Write-Host 'Nightshift is open: close it and start it again to update.'
     } else {
         $rel = Invoke-RestMethod "https://api.github.com/repos/$repo/releases/latest" -UseBasicParsing -TimeoutSec 20
