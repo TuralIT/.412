@@ -25,28 +25,32 @@ try {
     if (Get-Process Nightshift -ErrorAction SilentlyContinue | Where-Object { $_.Path -like "$dir\*" }) {
         Write-Host 'Nightshift is open: close it and start it again to update.'
     } else {
-        $rel = Invoke-RestMethod "https://api.github.com/repos/$repo/releases/latest" -UseBasicParsing -TimeoutSec 20
-        $tag = $rel.tag_name
+        # latest version = where github.com/.../releases/latest redirects to (the web page, not the rate-limited API)
+        $r = Invoke-WebRequest "https://github.com/$repo/releases/latest" -Method Head -UseBasicParsing -TimeoutSec 20
+        $u = if ($r.BaseResponse.ResponseUri) { $r.BaseResponse.ResponseUri } else { $r.BaseResponse.RequestMessage.RequestUri }
+        $tag = $u.Segments[-1]
+        $dl = "https://github.com/$repo/releases/download/$tag"
         if (Test-Path $ver) { $have, $base = (Get-Content $ver -Raw).Trim() -split '\s+' }
         elseif (Test-Path $exe) { $have, $base = 'v1.0', 'v1.0' }      # installed by the first installer
         else { $have, $base = $null, $null }
-        $small = $rel.assets | Where-Object { $_.name -eq "Nightshift-update-from-$base.zip" }
-        $full = $rel.assets | Where-Object { $_.name -eq 'Nightshift.zip' }
-        if ($have -eq $tag) {
-            Write-Host "Nightshift $tag is up to date."
-        } elseif ($small -and (Test-Path $exe)) {
-            Write-Host "Updating Nightshift $have -> $tag ($([math]::Round($small.size / 1MB, 1)) MB)..."
-            Get-Zip $small.browser_download_url $dir
-            Set-Content $ver "$tag $base"
-        } else {
-            Write-Host "Downloading Nightshift $tag ($([math]::Round($full.size / 1MB)) MB)..."
+        $done = $have -eq $tag
+        if ($done) { Write-Host "Nightshift $tag is up to date." }
+        elseif ($base -and (Test-Path $exe)) {
+            try {
+                Write-Host "Updating Nightshift $have -> $tag (only the changed files)..."
+                Get-Zip "$dl/Nightshift-update-from-$base.zip" $dir
+                Set-Content $ver "$tag $base"
+                $done = $true
+            } catch { Write-Host "No small update from $base, getting the full version." }
+        }
+        if (-not $done) {
+            Write-Host "Downloading Nightshift $tag (about 210 MB)..."
             if (Test-Path $exe) { Remove-Item (Join-Path $dir 'Nightshift') -Recurse -Force }
             elseif (Test-Path $dir) { throw "$dir exists but isn't a Nightshift install - move it away and run this again" }
             New-Item -ItemType Directory $dir -Force | Out-Null
-            Get-Zip $full.browser_download_url $dir
-            # this full zip is the base for later small updates: the base its own small update starts from, or itself
-            $up = $rel.assets | Where-Object { $_.name -like 'Nightshift-update-from-*.zip' } | Select-Object -First 1
-            $base = if ($up) { $up.name -replace '^Nightshift-update-from-(.+)\.zip$', '$1' } else { $tag }
+            Get-Zip "$dl/Nightshift.zip" $dir
+            $bt = Join-Path $dir 'base.txt'                 # the release later small updates start from
+            $base = if (Test-Path $bt) { (Get-Content $bt -Raw).Trim() } else { 'v1.0' }   # v1.0/v1.1 zips: no base.txt
             Set-Content $ver "$tag $base"
             $learned = Join-Path $env:USERPROFILE 'Desktop\meth_learned.json'   # Nightshift offers to import it once
             $src = Join-Path $dir 'meth_learned.json'
